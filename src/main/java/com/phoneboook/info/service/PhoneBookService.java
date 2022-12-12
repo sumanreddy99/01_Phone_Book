@@ -2,7 +2,10 @@ package com.phoneboook.info.service;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import com.phoneboook.info.model.Contact;
+
 
 public interface PhoneBookService {
 	public String saveContact(Contact contact);

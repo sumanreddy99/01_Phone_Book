@@ -7,8 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name = "phonebook")
+@Data
 public class Contact {
 	
 	@Id
@@ -32,38 +35,7 @@ public class Contact {
 	
 	}
 	
-	public Contact(String name, String mailId, String phoneNumber) {
-		super();
-		this.name = name;
-		this.mailId = mailId;
-		this.phoneNumber = phoneNumber;
-	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getMailId() {
-		return mailId;
-	}
-	public void setMailId(String mailId) {
-		this.mailId = mailId;
-	}
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-	
-	
+		
 	
 
 }

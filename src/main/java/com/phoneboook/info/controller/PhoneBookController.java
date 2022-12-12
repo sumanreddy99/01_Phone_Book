@@ -5,7 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,21 +22,10 @@ import com.phoneboook.info.service.PhoneBookService;
 public class PhoneBookController {
 
 	@Autowired
-	private PhoneBookService phoneBookService;
+	public PhoneBookService phoneBookService;
 
-	@RequestMapping(value = "/getAllContacts", method = RequestMethod.GET)
-	public ResponseEntity<Object> getAllContaccts() {
-
-		List<Contact> contacts = phoneBookService.getAllContaccts();
-		if (contacts != null && !contacts.isEmpty()) {
-			return new ResponseEntity<Object>("All Contacts Retrieve SuccessFully ", HttpStatus.OK);
-
-		}
-		return new ResponseEntity<Object>("Failed To Retrieve All Contacts", HttpStatus.BAD_REQUEST);
-
-	}
-
-	@RequestMapping(value = "/saveContact", method = RequestMethod.POST)
+	
+	@PostMapping(value = "/saveContact")
 	public ResponseEntity<Object> saveContact(@RequestBody Contact contact) {
 		String saveContact = phoneBookService.saveContact(contact);
 
@@ -45,18 +38,30 @@ public class PhoneBookController {
 		return new ResponseEntity<Object>("Contact Insertion Failed", HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	@RequestMapping(value = "/getContact/{contactId}", method = RequestMethod.GET)
-	public ResponseEntity<Object> getContactById(@PathVariable("contactId") Integer contactId) {
-		Contact contact = phoneBookService.getContactById(contactId);
-		if (contact != null) {
-			return new ResponseEntity<Object>("Contact Retrieve SuccessFully ", HttpStatus.OK);
+	@GetMapping(value = "/getAllContacts")
+	public List<Contact> getAllContaccts() {
 
-		}
-		return new ResponseEntity<Object>("Failed To Retrieve Contact", HttpStatus.BAD_REQUEST);
+		List<Contact> contacts = phoneBookService.getAllContaccts();
+		if (contacts != null && !contacts.isEmpty()) {
+			return contacts;
+		} else
+			return null;
 
 	}
 
-	@RequestMapping(value = "/updateContact", method = RequestMethod.PATCH)
+	
+	@GetMapping(value = "/getContact/{contactId}")
+	public Contact getContactById(@PathVariable("contactId") Integer contactId) {
+		Contact contact = phoneBookService.getContactById(contactId);
+		if (contact != null) {
+			return contact;
+
+		}
+		return null;
+
+	}
+
+	@PatchMapping(value = "/updateContact")
 	public ResponseEntity<Object> updateContact(@RequestBody Contact contact) {
 
 		String updateContact = phoneBookService.updateContact(contact);
@@ -70,7 +75,7 @@ public class PhoneBookController {
 
 	}
 
-	@RequestMapping(value = "/deleteContact/{contactId}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/deleteContact/{contactId}")
 	public ResponseEntity<Object> deleteContactById(@PathVariable("contactId") Integer contactId) {
 
 		String deleteContact = phoneBookService.deleteContactById(contactId);

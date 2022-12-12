@@ -4,14 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.phoneboook.info.model.Contact;
 import com.phoneboook.info.repository.PhoneBookRepository;
-
+@Service
 public class PhoneBookServiceImpl implements PhoneBookService {
 
 	@Autowired
-	private PhoneBookRepository phoneBookRepository;
+	public PhoneBookRepository phoneBookRepository;
 
 	@Override
 	public String saveContact(Contact contact) {
